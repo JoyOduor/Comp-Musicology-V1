@@ -6,7 +6,15 @@ output:
   flexdashboard::flex_dashboard:
     storyboard: true
 ---
-### Introduction
+```{r setup, include=FALSE}
+library(tidyverse)
+library(spotifyr)
+library(compmus)
+
+```
+
+
+### Home
 
 ***
 
@@ -17,3 +25,19 @@ output:
 ### Conclusion
 
 ***
+```{r playlist audio features}
+corpus<- get_playlist_audio_features("", "4rAgX03HCHgKDTEpwCOzKG")
+corpus_nostalgia <- get_playlist_audio_features("", "6W3I5rQT7GUuaamQwgX3PL")
+corpus_collidewiththesky <- get_playlist_audio_features("","45MgDPngswNvw54lk3gYoF")
+corpus_channelorange <- get_playlist_audio_features("", "3yoSA3ffnSdAifk1a8T9SM")
+corpus_dead <- get_playlist_audio_features("", "5AlLcKu3I0LNrN4xCJ3oqN")
+corpus_chaseatlantic <- get_playlist_audio_features("", "1TM6VvzBZ8p0gqelKulqFf")
+corpus_syre <- get_playlist_audio_features("", "4tBQbGu9Zo8R35NlxtheuZ")
+corpus_into <- get_playlist_audio_features("", "74kfEsw9YeK6dXbCUg5cwd")
+corpus_freudian <- get_playlist_audio_features("", "6bDoKNaOQT1xvfbtktLpJB")
+corpus_blonde <- get_playlist_audio_features("", "6S7fG76Xd2q1Z20eQjqAiu")
+```
+
+
+
+
