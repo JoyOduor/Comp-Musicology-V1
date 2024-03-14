@@ -10,7 +10,8 @@ output:
 library(tidyverse)
 library(spotifyr)
 library(compmus)
-
+library(ggplot2)
+library(compmus)
 ```
 
 
@@ -22,9 +23,8 @@ library(compmus)
 
 ***
 
-### Conclusion
+### Week 1/7: Fourier Analysis - Data Visualisation
 
-***
 ```{r playlist audio features}
 corpus<- get_playlist_audio_features("", "4rAgX03HCHgKDTEpwCOzKG")
 corpus_nostalgia <- get_playlist_audio_features("", "6W3I5rQT7GUuaamQwgX3PL")
@@ -37,7 +37,15 @@ corpus_into <- get_playlist_audio_features("", "74kfEsw9YeK6dXbCUg5cwd")
 corpus_freudian <- get_playlist_audio_features("", "6bDoKNaOQT1xvfbtktLpJB")
 corpus_blonde <- get_playlist_audio_features("", "6S7fG76Xd2q1Z20eQjqAiu")
 ```
-
-
-
+```{r}
+chase_atlantic <-
+  bind_rows(
+    corpus_nostalgia |> mutate(category = "corpus_nostalgia"),
+    corpus_chaseatlantic |> mutate(category = "corpus_chaseatlantic")
+  )
+corpus_nostalgia |> ggplot(aes(x = energy)) + geom_histogram(binwidth = 0.1)
+corpus_chaseatlantic |> ggplot(aes(x = energy)) + geom_histogram(binwidth = 0.1)
+chase_atlantic |> ggplot(aes(x = energy)) + geom_histogram(binwidth = 0.1)
+```
+***
 
