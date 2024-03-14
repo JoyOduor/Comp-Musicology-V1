@@ -2,11 +2,5 @@
 library(tidyverse)
 library(spotifyr)
 library(compmus)
-chase_atlantic <-
-  bind_rows(
-    corpus_nostalgia |> mutate(category = "corpus_nostalgia"),
-    corpus_chaseatlantic |> mutate(category = "corpus_chaseatlantic")
-  )
-corpus_nostalgia |> ggplot(aes(x = energy)) + geom_histogram(binwidth = 0.1)
-corpus_chaseatlantic |> ggplot(aes(x = energy)) + geom_histogram(binwidth = 0.1)
+
 ```
