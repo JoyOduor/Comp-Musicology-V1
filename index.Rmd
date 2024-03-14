@@ -12,8 +12,8 @@ library(spotifyr)
 library(compmus)
 library(ggplot2)
 library(compmus)
-```
 
+```
 
 ### Home
 
@@ -23,7 +23,7 @@ library(compmus)
 
 ***
 
-### Week 1/7: Fourier Analysis - Data Visualisation
+### Week 1/7: Fourier Analysis - Data Visualisation - Chase Atlantic 
 
 ```{r playlist audio features}
 corpus<- get_playlist_audio_features("", "4rAgX03HCHgKDTEpwCOzKG")
@@ -37,15 +37,161 @@ corpus_into <- get_playlist_audio_features("", "74kfEsw9YeK6dXbCUg5cwd")
 corpus_freudian <- get_playlist_audio_features("", "6bDoKNaOQT1xvfbtktLpJB")
 corpus_blonde <- get_playlist_audio_features("", "6S7fG76Xd2q1Z20eQjqAiu")
 ```
-```{r}
+```{r W7 Chase Atlantic Data Visualisations}
 chase_atlantic <-
   bind_rows(
     corpus_nostalgia |> mutate(category = "corpus_nostalgia"),
     corpus_chaseatlantic |> mutate(category = "corpus_chaseatlantic")
   )
-corpus_nostalgia |> ggplot(aes(x = energy)) + geom_histogram(binwidth = 0.1)
-corpus_chaseatlantic |> ggplot(aes(x = energy)) + geom_histogram(binwidth = 0.1)
-chase_atlantic |> ggplot(aes(x = energy)) + geom_histogram(binwidth = 0.1)
+chase_atlantic |>
+  ggplot(aes(x = energy)) +
+  geom_histogram(binwidth = 0.1) +
+  facet_wrap(~category)
+chase_atlantic |>
+  ggplot(aes(x = category, y = energy)) +
+  geom_violin()
+chase_atlantic |> ggplot(aes(x = valence, y = energy)) + geom_point() + geom_smooth()
 ```
 ***
+### Week 1/7: ggplot - Data Visualisation - Chase Atlantic 
+```{r W7 Chase Atlantic Graph}
+chase_atlantic |>                  
+  mutate(
+    mode = ifelse(mode == 0, "Minor", "Major")
+  ) |>
+  ggplot(                     
+    aes(
+      x = valence,
+      y = energy,
+      size = loudness,
+      colour = mode
+    )
+  ) +
+  geom_point() +              
+  geom_rug(linewidth = 0.1) + 
+  geom_text(                  
+    aes(
+      x = valence,
+      y = energy,
+      label = label
+    ),
+    data = 
+      tibble(
+        label = c("Nostalgia", "Chase Atlantic"),
+        category = c("corpus_nostalgia", "corpus_chaseatlantic"),
+        valence = c(0.104, 0.0339),
+        energy = c(0.992, 0.00166)
+      ),
+    colour = "black",         
+    size = 3,                 
+    hjust = "left",           
+    vjust = "center",         
+    nudge_x = 0.03            
+  ) +
+  facet_wrap(~ category) +    
+  scale_x_continuous(         
+    limits = c(0, 1),
+    breaks = c(0, 0.50, 1),  
+    minor_breaks = NULL       
+  ) +
+  scale_y_continuous(         
+    limits = c(0, 1),
+    breaks = c(0, 0.50, 1),
+    minor_breaks = NULL
+  ) +
+  scale_colour_brewer(        
+    type = "qual",            
+    palette = "Paired"        
+  ) +
+  scale_size_continuous(      
+    trans = "exp",            
+    guide = "none"            
+  ) +
+  theme_light() +             
+  labs(                       
+    x = "Valence",
+    y = "Energy",
+    colour = "Mode"
+  )
+```
+***
+### Week 1/7: Fourier Analysis - Data Visualisation - Frank Ocean
+```{r W7 Frank Ocean Data Visualisations}
+frank_ocean <-
+  bind_rows(
+    corpus_channelorange |> mutate(category = "corpus_channelorange"),
+    corpus_blonde |> mutate(category = "corpus_blonde")
+  )
+frank_ocean |>
+  ggplot(aes(x = energy)) +
+  geom_histogram(binwidth = 0.1) +
+  facet_wrap(~category)
+frank_ocean |>
+  ggplot(aes(x = category, y = energy)) +
+  geom_violin()
+frank_ocean |> ggplot(aes(x = valence, y = energy)) + geom_point() + geom_smooth()
+```
+***
+### Week 1/7: ggplot - Data Visualisation - Frank Ocean
+```{r W7 Frank Ocean Graph}
+frank_ocean |>                  
+  mutate(
+    mode = ifelse(mode == 0, "Minor", "Major")
+  ) |>
+  ggplot(                     
+    aes(
+      x = valence,
+      y = energy,
+      size = loudness,
+      colour = mode
+    )
+  ) +
+  geom_point() +              
+  geom_rug(linewidth = 0.1) + 
+  geom_text(                  
+    aes(
+      x = valence,
+      y = energy,
+      label = label
+    ),
+    data = 
+      tibble(
+        label = c("channel Orange", "Blonde"),
+        category = c("corpus_channelorange", "corpus_blonde"),
+        valence = c(0.104, 0.0339),
+        energy = c(0.992, 0.00166)
+      ),
+    colour = "black",         
+    size = 3,                 
+    hjust = "left",           
+    vjust = "center",         
+    nudge_x = 0.03            
+  ) +
+  facet_wrap(~ category) +    
+  scale_x_continuous(         
+    limits = c(0, 1),
+    breaks = c(0, 0.50, 1),  
+    minor_breaks = NULL       
+  ) +
+  scale_y_continuous(         
+    limits = c(0, 1),
+    breaks = c(0, 0.50, 1),
+    minor_breaks = NULL
+  ) +
+  scale_colour_brewer(        
+    type = "qual",            
+    palette = "Paired"        
+  ) +
+  scale_size_continuous(      
+    trans = "exp",            
+    guide = "none"            
+  ) +
+  theme_light() +             
+  labs(                       
+    x = "Valence",
+    y = "Energy",
+    colour = "Mode"
+  )
+```
 
+***
